@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "570437456322",
+    "project_id": "bakeryandmore-82e55",
+    "storage_bucket": "bakeryandmore-82e55.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:570437456322:android:e3f27ddbedde51c92f065b",
+        "android_client_info": {
+          "package_name": "com.example.bakeryandmore"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "570437456322-l29tep6kbq83b32u75jqkloc9ctdqhd6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUTeJui103eXU1nGpTN_ALlqRkkieO53w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "570437456322-l29tep6kbq83b32u75jqkloc9ctdqhd6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

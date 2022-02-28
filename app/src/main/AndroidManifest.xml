@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.bakeryandmore">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.BakeryAndMore">
+        <activity
+            android:name=".EditCategoryActivity"
+            android:exported="false"
+            android:screenOrientation="sensor" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".ImageSliderActivity"
+            android:exported="true"
+            android:screenOrientation="sensor" />
+        <activity
+            android:name=".SlideshowActivity"
+            android:exported="true"
+            android:screenOrientation="sensor" />
+        <activity
+            android:name=".PhotoLibraryActivity"
+            android:exported="true"
+            android:screenOrientation="sensor" />
+        <activity
+            android:name=".AddCategoryActivity"
+            android:exported="true"
+            android:screenOrientation="sensor" />
+        <activity
+            android:name=".SplashScreenActivity"
+            android:exported="true"
+            android:screenOrientation="landscape">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

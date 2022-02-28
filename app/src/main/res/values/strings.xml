@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">BakeryAndMore</string>
+    <string name="snacks_imageview">Snacks ImageView</string>
+    <string name="cakes_imageview">Cakes ImageView</string>
+    <string name="next_button">Επομενο</string>
+    <string name="select_category_textView">Επιλέξτε κατηγορία</string>
+    <string name="bakery_more"><![CDATA[Bakery & More]]></string>
+    <string name="fab_add">Fab add image</string>
+    <string name="delete_image_item">Delete</string>
+    <string name="slideshow_item">Slideshow</string>
+    <string name="cancel_item">Cancel</string>
+    <string name="grid_view_item_image">Grid view item image</string>
+    <string name="loading_dialog_imageview">Loading dialog ImageView</string>
+    <string name="photo_library_imagebutton">Photo Library ImageButton</string>
+    <string name="slideshow_imagebutton">Slideshow ImageButton</string>
+    <string name="arrow_back_toolbar_imagebutton">Arrow back Toolbar ImageButton</string>
+    <string name="slideshow_toolbar_imagebutton">Slideshow Toolbar ImageButton</string>
+    <string name="delete_toolbar_imagebutton">Delete Toolbar ImageButton</string>
+    <string name="delete_category">Delete Category</string>
+    <string name="edit_category">Edit Category</string>
+    <string name="slideshow">Slideshow</string>
+    <string name="photo_library">Photo Library</string>
+    <string name="category_name_text_view">Προσθήκη νέας κατηγορίας</string>
+    <string name="name">Όνομα</string>
+    <string name="add_category_image_view">add category image view</string>
+    <string name="add_category_image_preview_image_view">add category image preview image view</string>
+    <string name="add_category_button">Προσθηκη</string>
+    <string name="slider_view_item_image_view">slider view item image view</string>
+    <string name="image_slider_item_image_view">image slider item image view</string>
+    <string name="grid_item_image_view">grid item image view</string>
+    <string name="app_icon_image_view">app icon image view</string>
+    <string name="edit_category_image_preview_image_view">edit category image preview image view</string>
+    <string name="edit_category_image_select_image_view">edit category image select image view</string>
+    <string name="edit_category_button">Ενημερωση</string>
+</resources>

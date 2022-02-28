@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context=".AddCategoryActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@color/app_backgroundColor"
+        android:minHeight="?attr/actionBarSize"
+        android:paddingVertical="15dp"
+        android:theme="?attr/actionBarTheme">
+
+        <ImageButton
+            android:id="@+id/arrow_back_add_category_toolbar_imageButton"
+            android:layout_width="48dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/arrow_back_toolbar_imagebutton"
+            android:src="@drawable/ic_arrow_back" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="@string/category_name_text_view"
+        android:textSize="26sp" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="260dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="25dp"
+        android:hint="@string/name"
+        app:boxCornerRadiusBottomEnd="30dp"
+        app:boxCornerRadiusBottomStart="30dp"
+        app:boxCornerRadiusTopEnd="30dp"
+        app:boxCornerRadiusTopStart="30dp"
+        app:boxStrokeColor="@color/app_backgroundColor"
+        app:hintTextColor="@color/app_backgroundColor">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/add_category_categoryName_editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionNext"
+            android:inputType="text"
+            tools:ignore="TextContrastCheck" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <RelativeLayout
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="25dp">
+
+        <ImageView
+            android:id="@+id/add_category_preview_imageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/add_category_image_view" />
+
+        <ImageView
+            android:id="@+id/add_category_add_image_icon_imageView"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_centerInParent="true"
+            android:contentDescription="@string/add_category_image_preview_image_view"
+            android:src="@drawable/ic_add_image_icon" />
+
+    </RelativeLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/add_category_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/button_next_bg_with_opacity"
+        android:enabled="false"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:text="@string/add_category_button"
+        android:textColor="@color/black" />
+
+</LinearLayout>
