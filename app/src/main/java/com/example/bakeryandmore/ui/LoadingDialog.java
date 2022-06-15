@@ -2,10 +2,13 @@ package com.example.bakeryandmore.ui;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
 import com.example.bakeryandmore.R;
+
+import java.security.spec.ECField;
 
 public class LoadingDialog {
 
@@ -33,6 +36,11 @@ public class LoadingDialog {
 
     /*----- Dismiss/Close loading dialog -----*/
     public void dismissDialog() {
-        dialog.dismiss();
+        try {
+            dialog.dismiss();
+        } catch (Exception e) {
+            Log.d("myException", "dismissDialog: " + e.getMessage());
+        }
+
     }
 }

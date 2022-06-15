@@ -8,13 +8,15 @@ public class Image implements Serializable {
 
     private String id;
     private String imageURL;
+    private boolean isSelected;
 
     public Image() {
     }
 
-    public Image(String id, String imageURL) {
+    public Image(String id, String imageURL, Boolean isSelected) {
         this.id = id;
         this.imageURL = imageURL;
+        this.isSelected = isSelected;
     }
 
     public String getId() {
@@ -31,6 +33,14 @@ public class Image implements Serializable {
 
     public void setImageURL(String imageURL) {
         this.imageURL = imageURL;
+    }
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
     }
 
     @NonNull

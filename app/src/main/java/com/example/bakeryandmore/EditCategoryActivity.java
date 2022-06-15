@@ -1,12 +1,12 @@
 package com.example.bakeryandmore;
 
-import androidx.annotation.Nullable;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.content.ContextCompat;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -48,6 +48,8 @@ public class EditCategoryActivity extends AppCompatActivity implements View.OnCl
     /*-------- Database Variables --------*/
     private FirebaseData firebaseData;
 
+    ActivityResultLauncher<String> mTakePhoto;
+
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +85,18 @@ public class EditCategoryActivity extends AppCompatActivity implements View.OnCl
         editImageImageView.setOnClickListener(this);
         editCategoryButton.setOnClickListener(this);
         categoryNameEditText.addTextChangedListener(this);
+
+        mTakePhoto = registerForActivityResult(new ActivityResultContracts.GetContent(), result -> {
+            selectedImageUri = result;
+            try {
+                InputStream inputStream = getContentResolver().openInputStream(selectedImageUri);
+                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                previewImageView.setImageBitmap(bitmap);
+                categoryImageChanged = true;
+            } catch (Exception e) {
+                new RequestOptions().centerCrop().placeholder(R.drawable.progress_animation);
+            }
+        });
     }
 
     @Override
@@ -90,8 +104,7 @@ public class EditCategoryActivity extends AppCompatActivity implements View.OnCl
         if (v.getId() == R.id.arrow_back_edit_category_toolbar_imageButton) {
             finish();
         } else if (v.getId() == R.id.edit_category_edit_image_icon_imageView) {
-            loadingDialog.startLoadingDialog();
-            pickFromGallery();
+            mTakePhoto.launch("image/*");
         } else if (v.getId() == R.id.edit_category_button) {
             loadingDialog.startLoadingDialog();
 
@@ -107,6 +120,7 @@ public class EditCategoryActivity extends AppCompatActivity implements View.OnCl
     /*-------- Update category image --------*/
     private void updateCategoryImage() {
         firebaseData.uploadImage(selectedCategory, Objects.requireNonNull(categoryNameEditText.getText()).toString().trim(), selectedImageUri, new FirebaseDataCategoriesAsyncResponse() {
+
             @Override
             public void processGetCategoriesListFinished(ArrayList<Category> categories) {
 
@@ -129,6 +143,7 @@ public class EditCategoryActivity extends AppCompatActivity implements View.OnCl
     /*-------- Update both category's name and image --------*/
     private void updateBothCategoryNameAndImage() {
         firebaseData.uploadImage(selectedCategory, Objects.requireNonNull(categoryNameEditText.getText()).toString().trim(), selectedImageUri, new FirebaseDataCategoriesAsyncResponse() {
+
             @Override
             public void processGetCategoriesListFinished(ArrayList<Category> categories) {
 
@@ -149,33 +164,6 @@ public class EditCategoryActivity extends AppCompatActivity implements View.OnCl
             loadingDialog.dismissDialog();
             finish();
         }, 2000);
-    }
-
-    /*-------- Open device's gallery --------*/
-    private void pickFromGallery() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent, 1);
-    }
-
-    @SuppressLint("CheckResult")
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == 1 && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            selectedImageUri = data.getData();
-            try {
-                InputStream inputStream = getContentResolver().openInputStream(selectedImageUri);
-                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                previewImageView.setImageBitmap(bitmap);
-                categoryImageChanged = true;
-            } catch (Exception e) {
-                new RequestOptions().centerCrop().placeholder(R.drawable.progress_animation);
-            }
-        }
-        loadingDialog.dismissDialog();
     }
 
     @Override

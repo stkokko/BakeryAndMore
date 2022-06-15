@@ -70,6 +70,16 @@ public class PhotoLibraryGridViewAdapter extends RecyclerView.Adapter<PhotoLibra
     public void onBindViewHolder(@NonNull PhotoLibraryGridViewAdapter.ViewHolder holder, int position) {
         Image image = imageList.get(position);
         Glide.with(context).load(image.getImageURL()).apply(options).into(holder.imageView);
+
+        if (image.isSelected()) {
+            holder.checkbox.setChecked(true);
+            holder.checkbox.setVisibility(View.VISIBLE);
+            holder.itemLayout.setAlpha(0.5f);
+        } else {
+            holder.checkbox.setChecked(false);
+            holder.checkbox.setVisibility(View.GONE);
+            holder.itemLayout.setAlpha(1);
+        }
     }
 
     @Override
@@ -142,6 +152,7 @@ public class PhotoLibraryGridViewAdapter extends RecyclerView.Adapter<PhotoLibra
                         checkbox.setChecked(true);
                         checkbox.setVisibility(View.VISIBLE);
                         selectedImagesList.add(imageList.get(getAdapterPosition()));
+                        imageList.get(getAdapterPosition()).setSelected(true);
 
                         setActivityLayout();
                         itemLayout.setAlpha(0.5F);
@@ -166,6 +177,7 @@ public class PhotoLibraryGridViewAdapter extends RecyclerView.Adapter<PhotoLibra
                         checkbox.setVisibility(View.GONE);
                         itemLayout.setAlpha(1);
                         selectedImagesList.remove(imageList.get(getAdapterPosition()));
+                        imageList.get(getAdapterPosition()).setSelected(false);
 
                         toolbarCategoryNameTextView.setVisibility(View.GONE);
                         toolbarSelectedImageTextView.setText("Επιλεγμένα   " + getSelectedImagesItemCount());

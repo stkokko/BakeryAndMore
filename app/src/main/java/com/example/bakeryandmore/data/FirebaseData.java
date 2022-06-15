@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import com.example.bakeryandmore.models.Category;
 import com.example.bakeryandmore.models.Image;
+
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.storage.FirebaseStorage;
@@ -46,7 +47,7 @@ public class FirebaseData {
     }
 
     /*-------- Uploading the selected (for category's photo library) image --------*/
-    public void uploadImage(String categoryName, Uri imageUri, boolean flag, final FirebaseDataImagesAsyncResponse callback) {
+    public void uploadImage(String categoryName, Uri imageUri, final FirebaseDataImagesAsyncResponse callback) {
 
         /*----- Variables -----*/
         String imageName = categoryName + System.currentTimeMillis();
@@ -56,16 +57,11 @@ public class FirebaseData {
         storageReference.putFile(imageUri)
                 .addOnSuccessListener(taskSnapshot -> storageReference.getDownloadUrl()
                         .addOnSuccessListener(uri -> {
-
-                            if (flag)
-                                Toast.makeText(context, "Η εικόνα αποθηκεύτηκε επιτυχώς", Toast.LENGTH_SHORT).show();
-
                             if (callback != null)
                                 callback.processSaveImageFinished(uri.toString(), imageName);
                         }).addOnFailureListener(e -> Toast.makeText(context, "Αποτυχία αποθήκευσης εικόνας", Toast.LENGTH_SHORT).show()))
                 .addOnFailureListener(exception -> Toast.makeText(context, "Αποτυχία αποθήκευσης εικόνας", Toast.LENGTH_SHORT).show())
                 .addOnProgressListener(snapshot -> {
-
                 });
 
     }
@@ -177,7 +173,7 @@ public class FirebaseData {
     public void addCategory(String categoryName, String id, String imageURL) {
         Map<String, Object> categoryMap = new HashMap<>();
         categoryMap.put("name", categoryName);
-        categoryMap.put("categoryImage", new Image(id, imageURL));
+        categoryMap.put("categoryImage", new Image(id, imageURL, false));
         categoryMap.put("images", new ArrayList<>());
 
         firebaseFirestore.collection("Categories")

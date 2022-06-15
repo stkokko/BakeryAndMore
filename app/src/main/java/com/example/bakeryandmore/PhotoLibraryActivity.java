@@ -1,6 +1,7 @@
 package com.example.bakeryandmore;
 
-import androidx.annotation.Nullable;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -39,6 +40,8 @@ public class PhotoLibraryActivity extends AppCompatActivity implements View.OnCl
     /*-------- Database Variables --------*/
     private FirebaseData firebaseData;
 
+    ActivityResultLauncher<String> mTakePhoto;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,13 +74,22 @@ public class PhotoLibraryActivity extends AppCompatActivity implements View.OnCl
         arrowBackToolbarImageButton.setOnClickListener(this);
         slideshowToolbarImageButton.setOnClickListener(this);
         deleteToolbarImageButton.setOnClickListener(this);
+
+        mTakePhoto = registerForActivityResult(new ActivityResultContracts.GetContent(), result -> {
+            if (result != null) {
+                imageUri = result;
+                saveImage();
+            } else {
+                if (loadingDialog != null) loadingDialog.dismissDialog();
+            }
+        });
     }
 
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.fab_add_image) {
             loadingDialog.startLoadingDialog();
-            pickFromGallery();
+            mTakePhoto.launch("image/*");
         } else if (view.getId() == R.id.arrow_back_photo_library_toolbar_imageButton) {
             finish();
         } else if (view.getId() == R.id.delete_toolbar_imageButton) {
@@ -101,41 +113,23 @@ public class PhotoLibraryActivity extends AppCompatActivity implements View.OnCl
     private void deleteImages() {
         firebaseData.deleteImages(selectedCategory, (ArrayList<Image>) photoLibraryGridViewAdapter.getSelectedImagesList());
         setAdapter();
-        postDelayedExecute();
+        postDelayedExecute(1000);
     }
 
     /*-------- Execute code after a delay --------*/
-    private void postDelayedExecute() {
+    private void postDelayedExecute(int time) {
         final Handler handler = new Handler(Looper.getMainLooper());
-        handler.postDelayed(() -> loadingDialog.dismissDialog(), 1000);
-    }
+        handler.postDelayed(() -> loadingDialog.dismissDialog(), time);
 
-    /*-------- Open device's gallery --------*/
-    private void pickFromGallery() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent, 1);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == 1 && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            imageUri = data.getData();
-            saveImage();
-        } else
-            loadingDialog.dismissDialog();
     }
 
     /*-------- Save the selected image on Firebase Cloud Storage and
                then the whole Image object on Firebase Cloud Firestore --------*/
     private void saveImage() {
-        firebaseData.uploadImage(selectedCategory.getName(), imageUri, true, (url, imageName) -> {
+        firebaseData.uploadImage(selectedCategory.getName(), imageUri, (url, imageName) -> {
             firebaseData.updateCategoryImages(selectedCategory, imageName, url);
-            setAdapter();
-            postDelayedExecute();
+            photoLibraryGridViewAdapter.notifyDataSetChanged();
+            postDelayedExecute(2000);
         });
 
     }
@@ -158,7 +152,6 @@ public class PhotoLibraryActivity extends AppCompatActivity implements View.OnCl
                    images and call the method setAdapter() to set the adapter --------*/
         if (photoLibraryGridViewAdapter != null && photoLibraryGridViewAdapter.getSelectedImagesItemCount() > 0) {
             photoLibraryGridViewAdapter.setSelectedImagesList(new ArrayList<>());
-
             setAdapter();
         } else {
             super.onBackPressed();

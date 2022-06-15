@@ -68,7 +68,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     /*-------- Getting the categories array list from firestore and then set the adapter --------*/
     public void getCategories() {
         firebaseData.getCategories(new FirebaseDataCategoriesAsyncResponse() {
-                                       @Override
+
+            @Override
                                        public void processGetCategoriesListFinished(ArrayList<Category> categories) {
                                            categoriesRecyclerViewAdapter = new CategoriesRecyclerViewAdapter(getApplicationContext(), categories, MainActivity.this);
 
