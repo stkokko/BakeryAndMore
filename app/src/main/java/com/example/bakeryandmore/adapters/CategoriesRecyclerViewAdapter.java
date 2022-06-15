@@ -250,8 +250,6 @@ public class CategoriesRecyclerViewAdapter extends RecyclerView.Adapter<Categori
                             alertDialog.dismiss();
 
                             categories.remove(selectedCategoryPos);
-                            //TODO: whats the difference between notifyDataSetChanged and {notifyItemRemoved(pos)}
-                            // why the length of recycler view visually does not change?
                             notifyDataSetChanged();
                             selectedCategoryPos = -1;
                             showBottomActionBar(false);
